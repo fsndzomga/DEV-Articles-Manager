@@ -1,0 +1,171 @@
+fredy/how-to-create-a-simple-modern-profile-card-using-tailwind-css-471b,"As we all know, Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It provides a wide range of low-level utility classes that make it easy to build complex designs by composing simple CSS classes. Also, now is one of the most popular CSS frameworks in the whole web development industry! ⚡️
+Some of the benefits of using Tailwind CSS include:
+Speed: Because Tailwind provides a wide variety of pre-defined CSS classes, it can help developers quickly build and prototype user interfaces without having to write custom CSS.
+Consistency: By using the same set of classes throughout a project, developers can ensure that the design is consistent across different pages and components.
+Customizability: Tailwind CSS is highly customizable, allowing developers to easily adjust the design to match their project's specific needs.
+Accessibility: Tailwind CSS provides a set of classes that make it easy to implement accessibility best practices, such as providing sufficient contrast between text and background colors.
+A profile card is a great way to showcase important information about an individual or organization on a website. In this article, we’ll show you how to create a modern profile card using the popular CSS framework, Tailwind CSS.
+So, let’s get started!
+Let’s set up our project by creating the Tailwind CSS config file and adding base css. Here we will use some colors, shadows, and more from the upcoming Horizon UI template for Tailwind.
+tailwind.config.js
+
+index.css
+
+First, we’ll create the HTML structure for our profile card. We’ll use a div container to hold the card, and within that, we’ll add several divs to hold the different elements of our card, such as the background image, profile picture, name, and its statistics.
+index.html
+
+Add Tailwind CSS classes so the card has its own identity.
+
+All you have to do is integrate the card in your project. The final result should look like this:
+
+If it helps you, here is a link with the full code of today’s card 👉 play.tailwindcss.com
+In conclusion, creating a modern profile card with Tailwind CSS is a simple and efficient way to add a visually appealing element to your website or application. By utilizing the pre-designed classes and responsive design capabilities of Tailwind CSS, you can easily customize the layout and style of your profile card to fit the look and feel of your project.
+More cards like the one we made, components like navbars, dropdowns, and so on, will be available in the upcoming Horizon UI Tailwind version which will be released by the end of February.
+",Fredy Andrei,false
+molly_struve/level-up-your-ruby-skillz-working-with-hashes-4bid,"Last week I tackled Ruby arrays and shared some of the methods I find the most useful for working with them. This week I want to talk about HASHES! Before I dive head first into my favorite methods, I want to give a quick summary of what a hash is in Ruby and how it works. The definition of a Hash straight from the docs themselves:
+A Hash is a dictionary-like collection(If you are a Java person, think maps) of unique keys and their values. Also called associative arrays(honestly, I have never heard this before but 🤷), they are similar to Arrays, but where an Array uses integers as its index, a Hash allows you to use any object type.
+One of the keys(pun intended 😉) in that definition is that a Hash allows you to use any object type as your index. Most people when they think of a Hash think of this.
+
+But hashes can be so much more in Ruby! For example, all of these are Hashes.
+
+Any object type your heart desires can be a Hash key. Now that we have the semantics and the definition down, let's get to the methods!
+NOTE: Just like in the array tutorial, if you see irb in the code snippets that means I am working in a Ruby console. Also, I made a code CHEAT SHEET if you want the code without all the explanations.
+
+One of the most valuable things you can do with a hash is iterate over it. One of the easiest ways to loop over a hash is to use each. I don't know about you, but when I started out using Ruby, my hash each statements looked like this.
+
+Here, I am executing my each method the same way I did for my arrays. The difference now is that pair is an array itself. The first element is my key and the second element is my value. NOTE: After executing the block for each of our key/value pairs, the original hash that we iterated over is returned. 
+The above way works, but there is an even slicker way, you can separate that pair by passing two arguments to your block. This means you can rewrite the above like this:
+
+Now we have two separate variables, one representing the key and one representing the value. 
+
+But what if we don't want all the keys and values? What if we just want the keys or just want the values? There are methods for each of those!
+
+Notice, that once again, regardless if we use each_key or each_value, we still get the original hash back after we are done iterating over it. 
+
+Let's say you just want an array of the keys or you just want an array of the values from a hash. To do this, you can use keys or values. Both will return an array of the keys or values for a given hash.
+
+
+Another couple of pretty straight forward methods are the key and value predicates. If you want to know if a key or a value exists in a Hash then you can use key? or value?.
+
+This is pretty straightforward, but there are a couple of nuances I want to point out. For starters, when you are looking for a key, you have to make sure you are looking for the proper datatype. For example, if you have a hash with symbol keys, searching for a string will return false.
+
+Make sure the datatype you are searching for matches the datatype of your keys or values. 
+
+Now we know how we can check if we have a specific key or value, but what if we want to actually look up the value for a key? Well, there is always the standard way to do it and this is what I learned first.
+
+Simple and easy. If the key is there, we return its value. If the key is not there we return nil. But what if we have some more complicated logic? For example, what if we want to return the key's value OR, if the key does not exist, we want to return some default, like 0? With what we know so far we could do this
+
+It works, but it is a pretty decent chunk of code to get it done. Instead, we can replace that large chunk of code with one simple method, fetch. fetch has a lot of options and behaviors so lets unpack each, one at a time. 
+1) fetch with NO arguments will return the value if it is present. If the value is not present, fetch will raise an error. This is great if you want to raise an error when a key cannot be found.
+
+2) fetch WITH arguments will return the value if it is present, just like before. Here is where it gets slick and can help us out with our original use case, if you pass fetch an argument and the key is not present, it will return the argument! 🔥
+
+
+fetch works great when you have a single level hash and want to return a value from it using a key. But what if you have several nested hashes? For example
+
+Normally to get the value of c you would want to do
+
+which would traverse your nested hashes and return your value. But what if you are not sure whether all those levels are present? For example, let's say you are working with an API to get user data. Sometimes you find the user you are looking for and get this back.
+
+Other times, you don't find the user you want and you get this back,
+
+In this case, we can't just assume we have the user information, because if we don't have the user information, we will end up raising an error.
+
+To avoid this, we could do
+
+This ensures if we have the user data, we return the first name. If we don't have the data, then we return nil. Turns out, we can avoid ALL of this by using dig. dig extracts the nested value specified by a sequence of key objects. However, if any one of those nested keys do not exist, it will return nil. 🎉
+
+dig is great when you want to traverse a hash but are not sure what its structure might be. It allows you to work with a hash without worrying about handling a bunch of errors or doing a bunch of present? checks using if/else blocks.
+
+Now we are going to kick it up a notch. What if we have a hash where all the keys are symbols, but we want to change them all to strings? In the early days we would do this.
+
+It works, but you guessed it, now there is a better way. That better way is transform_keys. transform_keys allows you to iterate over a hash and will return a new hash. The new hash keys will be the result from executing the block for each of the original keys.
+
+IMPORTANT transform_keys(above) and transform_values(below) are only available in Ruby 2.5 and above. If you get the following error, then you are likely working with a version of Ruby below 2.5 NoMethodError: undefined methodtransform_keysfor {:a=>1, :b=>2, :c=>3}:Hash
+
+transform_values works the exact same way as transform_keys, except it allows you to update the values. When it is done executing your block, it will return a new hash with the new set of values.
+
+
+Now we are going to get into some familiar territory if you read my first array tutorial. Just like for arrays, you can use select for hashes! select for a hash works basically the same as an array, it returns a new hash with the key/value pairs that your block evaluated true for.
+
+
+Let's say you have a hash and you just want back a specific set of keys and their values. You could do something like this
+
+But Ruby has a simpler way and that is by using slice. slice will return a hash with only the keys you request via your arguments. What we have above can be simplified to
+
+
+Back we go again to familiar array territory. reject for a hash works the same way it does for an array. reject will return a new hash consisting of all the key/value pairs for which your block returns false.
+
+
+Last, but not least, we need to cover chaining. Any of the methods above that return a hash, you can chain together. For these examples I am going to use bracket notation because I think it's easier to read chaining methods from left to right, rather than up and down. 
+Here is an example of chaining some of the above methods together.
+
+Let's break down what is happening here given what we learned above. 
+1) transform_keys changes each of the hash's keys to a string and returns { ""a"" => 1, ""b"" => 2, ""c"" => 3 , ""d"" => 4}
+2) slice will select only keys ""a"" and ""b"" and their values and return { ""a"" => 1, ""b"" => 2 } 
+3) reject will remove any key/value pair where the value is equal to 2, that leaves us with { ""a"" => 1 }
+4) Our final transform_values will change our hash's values into a string with ""hi"" and our number following it. The final result is {""a""=>""hi 1""}
+
+You made it to the end!!! Hopefully you are feeling a little more comfortable with Ruby hashes now and have a couple more methods in your toolbox that you can use. If you have any questions or anything needs clarification please don't hesitate to drop a question in the comments! 
+If you want a quick reference for these methods I made a handy cheat sheet with just the code from each example.  
+",Molly Struve (she/her),false
+sarahokolo/is-tracking-user-behavior-with-javascript-ethical-2km8,"Privacy is not something that I'm merely entitled to, it's an absolute prerequisite. 
+Marlon Brando
+Have you ever thought about the amount of data that is being collected on you while you're browsing the internet? ever wondered how websites know what you're interested in and show you relevant ads? Well, it turns out that JavaScript plays a big role in tracking user behavior.
+JavaScript is a programming language that allows websites to be more interactive and responsive. But it's not just used for making cool animations or pop-ups, it can also be used to track your behavior on a website. Everything from your clicks, scrolls, and even keystrokes can be tracked and analyzed by companies.
+
+According to research posted by Timothy Libert on the ReaserchGate website 
+Findings indicate that nearly 9 in 10 websites leak user data to parties of which the user is likely unaware; more than 6 in 10 websites spawn third- party cookies; and more than 8 in 10 websites load Javascript code from external parties onto users' computers.
+Let's take a look a some few ways on how JavaScript is being used to track user behaviour on the web: 
+🛑 Event tracking: This is when a website uses JavaScript to track specific actions that you take on the website. For example, if you click on a button or scroll to a certain point on the page, the website can record that information. 
+🛑 Session tracking: This is when a website uses JavaScript to keep track of how long you spend on the website and which pages you visit. 
+🛑 A/B testing: This is when a website shows different versions of a website to different users and then uses the data to see which version is more popular or leads to more conversions.
+🛑 User-Agent tracking: This is a string that identifies the browser and version of the browser that is accessing the website. Website can track the user-agent of the user and can use this information to detect the browser and device of the user. This information can be used to deliver the browser-specific content or to show the browser-specific pop-up.
+Have you ever seen a website with a Heat Map? This is when a website uses JavaScript to track where you click on the website. Based on this information, the website can create a map that shows which parts of the website are being clicked on the most.
+All this tracking might help the website improve their user experience.
+However, a lot of these companies are not fully transparent to their users on how they track their user's behaviour.
+🚨 Tracking without consent: Some companies may use JavaScript to track user behavior without obtaining the user's consent.
+🚨 Misrepresentation of data collection: Some companies may collect and use data for purposes other than what they have stated in their privacy policy.
+🚨 Selling user data: Some sell their users data to third parties without obtaining the user's consent.
+🚨 Not providing an opt-out mechanism: Some companies deliberately choose not to provide users with an easy way to opt-out of tracking.
+🚨 Not providing clear and conspicuous notice: Some companies may not provide clear notice on the data collection, use, and sharing of the user data. 
+A lot of these companies also track their users while offline as well, collecting data and information even while the user is away from their site, here are a few ways in which this is done:
+🌐 Device Fingerprinting: This is a technique used to track users by collecting information about the user's device, such as the browser version, screen resolution, installed fonts, and more. 
+🌐browser cookies
+🌐browser cache
+🌐 browser history
+🌐 browser form data
+This is why it is always advised to clear your browser cache and history regularly, and disable cookies on your browser.
+Now, this raises an important question: is it ethical for companies to track our behavior without our knowledge or consent? Some argue that tracking user behavior is necessary for companies to improve their products and services. They might say that tracking behavior helps them to understand how people interact with their website, and as a result, they can make it more user-friendly. On the other hand, others might argue that tracking user behavior without consent is a violation of our privacy and goes against our basic human rights.
+Personally, I believe that companies should be transparent about their data collection practices, and users should have the option to opt-out of behavior tracking if they choose. And, the best way is to give the users the right to control their data and how it is used. It should be their choice, not the company's.
+What's your opinion on this topic? Share your thoughts in the comments below.
+",sahra,true
+yifanai/react-carousel-component-with-batteries-included-42i1,"
+GitHub: https://github.com/yifaneye/react-gallery-carousel
+Demo: https://yifaneye.github.io/react-gallery-carousel/ (or https://yifanai.com/rgc)
+
+I have used and carefully analysed a lot of carousel/slider components. I summarised that their issues are:
+⬇️
+I wanted to write my own detail-oriented and exquisite carousel component that is easy to use yet solves/supports all these things above under the hood. 🤓
+I wanted to take my understanding of JavaScript events, DOM manipulation, browser APIs, cross-browser compatibility and performance debugging to the next level. 🤓
+I wanted to master React functional components, hooks, custom hooks and reconciliation. 🤓
+I wanted to learn more, place more care and attention to accessibility. I want to give focus outlines to the right users, support keyboard navigation, support screen reader, and follow W3C accessible carousel tutorials.
+⬇️
+My carousel should support: touch, mouse emulation, keyboard navigation, modal (lightbox), thumbnails, autoplay (and auto pause), RTL (right to left for internationalisation), image lazy loading (and preloading), responsive images, fallback image, reduced motion settings, instantaneous velocity detection, responsive design, images with any sizes, custom elements in a slide, pinch to zoom, customisation and great accessibility. 😎
+(e.g. To solve the last issue (#20) in the list above, my carousel should be able to detect a mostly vertical swipe and then fix the slides horizontally in the carousel. ✅
+It should also be able to detect a mostly horizontal swipe and then fix the carousel vertically in the page. ✅)
+Demo: https://yifaneye.github.io/react-gallery-carousel/ (or https://yifanai.com/rgc)
+GitHub: https://github.com/yifaneye/react-gallery-carousel
+
+
+
+Demo: https://yifaneye.github.io/react-gallery-carousel/ (or https://yifanai.com/rgc)
+npm: https://www.npmjs.com/package/react-gallery-carousel
+I carefully handcrafted icons, wrote many useful custom hooks and wrote many exquisite functional components to complete this piece of work. 👨🏻‍💻
+
+
+Everyone is welcome to come and ask questions, find and report issues, make pull requests and suggestions! 😊
+GitHub: https://github.com/yifaneye/react-gallery-carousel
+Demo: https://yifaneye.github.io/react-gallery-carousel/ (or https://yifanai.com/rgc)
+Buy me a coffee to support me: https://www.buymeacoffee.com/yifanai
+",Yifan Ai,true
